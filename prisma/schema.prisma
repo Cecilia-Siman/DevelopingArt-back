@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id           Int            @id @default(autoincrement())
+  userName     String         @unique
+  email        String         @unique
+  password     String
+  artPieces    artPieces[]
+  shoppingCart shoppingCart[]
+  purchases    purchases[]
+}
+
+model artPieces {
+  id           Int            @id @default(autoincrement())
+  userId       Int
+  image        String
+  title        String
+  users        users          @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  shoppingCart shoppingCart[]
+  purchases    purchases[]
+}
+
+model shoppingCart {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  pieceId     Int
+  numberItems Int
+  type        types
+  size        sizes
+  users       users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  artPieces   artPieces @relation(fields: [pieceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum sizes {
+  small
+  big
+}
+
+enum types {
+  sticker
+  print
+}
+
+model prices {
+  id    Int    @id @default(autoincrement())
+  type  String
+  size  String
+  price Int
+}
+
+model purchases {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  pieceId     Int
+  numberItems Int
+  type        String
+  size        String
+  price       Int
+  time        DateTime  @db.Date
+  status      String
+  users       users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  artPieces   artPieces @relation(fields: [pieceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
