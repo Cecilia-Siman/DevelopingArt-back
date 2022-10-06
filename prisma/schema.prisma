@@ -41,20 +41,10 @@ model shoppingCart {
   artPieces   artPieces @relation(fields: [pieceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-enum sizes {
-  small
-  big
-}
-
-enum types {
-  sticker
-  print
-}
-
 model prices {
-  id    Int    @id @default(autoincrement())
-  type  String
-  size  String
+  id    Int   @id @default(autoincrement())
+  type  types
+  size  sizes
   price Int
 }
 
@@ -63,11 +53,27 @@ model purchases {
   userId      Int
   pieceId     Int
   numberItems Int
-  type        String
-  size        String
+  type        types
+  size        sizes
   price       Int
   time        DateTime  @db.Date
-  status      String
+  status      status
   users       users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   artPieces   artPieces @relation(fields: [pieceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum status {
+  producing
+  shipping
+  delivered
+}
+
+enum sizes {
+  small
+  big
+}
+
+enum types {
+  sticker
+  print
 }
