@@ -14,6 +14,12 @@ export async function updatePiece(artPiece: artPieces) {
   });
 }
 
+export async function deletePiece(id: number) {
+  await prisma.artPieces.delete({
+    where: { id },
+  });
+}
+
 export async function findUserPieces(userId: number) {
   const listPieces = await prisma.artPieces.findMany({
     where: { userId },
@@ -22,6 +28,6 @@ export async function findUserPieces(userId: number) {
 }
 
 export async function findAllPieces() {
-    const listAllPieces = await prisma.artPieces.findMany();
-    return listAllPieces;
+  const listAllPieces = await prisma.artPieces.findMany();
+  return listAllPieces;
 }

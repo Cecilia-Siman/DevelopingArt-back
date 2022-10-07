@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createPiece,
   updatePiece,
+  deletePiece,
   findUserPieces,
   findAllPieces,
 } from "../Controllers/artPiecesController";
@@ -10,17 +11,10 @@ import { validateSchema } from "../Middlewares/schemaValidator";
 
 const artPiecesRouter = Router();
 
-artPiecesRouter.post(
-  "/createPiece",
-  validateSchema(artPieceSchema),
-  createPiece
-);
-artPiecesRouter.put(
-  "/updatePiece",
-  validateSchema(artPieceSchema),
-  updatePiece
-);
-artPiecesRouter.get("/:userId/userPieces", findUserPieces);
-artPiecesRouter.get("/pieces", findAllPieces);
+artPiecesRouter.post("/pieces/create", validateSchema(artPieceSchema), createPiece);
+artPiecesRouter.put("/pieces/update", validateSchema(artPieceSchema), updatePiece);
+artPiecesRouter.delete("/pieces/delete", deletePiece);
+artPiecesRouter.get("/:userId/pieces/find", findUserPieces);
+artPiecesRouter.get("/pieces/findAll", findAllPieces);
 
 export default artPiecesRouter;
