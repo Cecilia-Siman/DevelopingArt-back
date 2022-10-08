@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { users } from "@prisma/client";
 import { findUser } from "../Repositories/userRepository";
 
-export async function userLogin(user: Omit<users, "id">) {
+export async function userLogin(user: Omit<users, "id" | "userName">) {
   const userData = await findUser(user.email);
   if (!userData) {
     throw { code: "Not Valid", message: "Email not registered" };
