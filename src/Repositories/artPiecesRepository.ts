@@ -1,7 +1,7 @@
 import { prisma } from "../Config/database";
 import { artPieces } from "@prisma/client";
 
-export async function insertUser(artPiece: Omit<artPieces, "id">) {
+export async function insertPiece(artPiece: Omit<artPieces, "id">) {
   await prisma.artPieces.create({
     data: artPiece,
   });
