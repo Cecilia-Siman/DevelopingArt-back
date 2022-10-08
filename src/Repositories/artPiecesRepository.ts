@@ -20,6 +20,13 @@ export async function deletePiece(id: number) {
   });
 }
 
+export async function findPieceById(id: number) {
+  const piece = await prisma.artPieces.findUnique({
+    where: { id },
+  });
+  return piece;
+}
+
 export async function findUserPieces(userId: number) {
   const listPieces = await prisma.artPieces.findMany({
     where: { userId },
