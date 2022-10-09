@@ -16,9 +16,8 @@ export async function userLogin(user: Omit<users, "id" | "userName">) {
   return token;
 }
 
-export function createToken(id: number): string {
-  const dados = { id };
+export function createToken(id: number) {
   const chaveSecreta = process.env.JWT_SECRET;
-  const token = jwt.sign(dados, chaveSecreta);
+  const token = jwt.sign({ id }, chaveSecreta);
   return token;
 }

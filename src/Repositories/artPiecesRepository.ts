@@ -1,4 +1,5 @@
 import { prisma } from "../Config/database";
+import connection from "../Config/postgres";
 import { artPieces } from "@prisma/client";
 
 export async function insertPiece(artPiece: Omit<artPieces, "id">) {
@@ -35,6 +36,8 @@ export async function findUserPieces(userId: number) {
 }
 
 export async function findAllPieces() {
-  const listAllPieces = await prisma.artPieces.findMany();
+  const { rows: listAllPieces } = await connection.query(
+    'select users."userName", "artPieces"."userId", "artPieces".id, "artPieces".image, "artPieces".title from "artPieces" join users on "artPieces"."userId" = users.id'
+  );
   return listAllPieces;
 }

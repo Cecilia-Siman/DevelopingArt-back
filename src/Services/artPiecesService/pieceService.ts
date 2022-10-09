@@ -6,8 +6,9 @@ import {
   deletePiece,
 } from "../../Repositories/artPiecesRepository";
 
-export async function newPiece(piece: Omit<artPieces, "id">) {
-  await insertPiece(piece);
+export async function newPiece(userId: number, piece: Omit<artPieces, "id">) {
+  const pieceData = { ...piece, userId };
+  await insertPiece(pieceData);
 }
 
 export async function alterPiece(userId: number, piece: artPieces) {
