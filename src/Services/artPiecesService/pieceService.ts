@@ -6,7 +6,10 @@ import {
   deletePiece,
 } from "../../Repositories/artPiecesRepository";
 
-export async function newPiece(userId: number, piece: Omit<artPieces, "id">) {
+export async function newPiece(
+  userId: number,
+  piece: Omit<artPieces, "id" | "userId">
+) {
   const pieceData = { ...piece, userId };
   await insertPiece(pieceData);
 }

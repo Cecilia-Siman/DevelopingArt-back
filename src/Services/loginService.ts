@@ -13,7 +13,7 @@ export async function userLogin(user: Omit<users, "id" | "userName">) {
   }
 
   const token = createToken(userData.id);
-  return token;
+  return { token, userId: userData.id, userName: userData.userName };
 }
 
 export function createToken(id: number) {
